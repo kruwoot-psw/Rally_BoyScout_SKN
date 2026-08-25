@@ -68,8 +68,7 @@
     allow="geolocation"
   ></iframe>
 
-
-  <script>
+<script>
     document.addEventListener("DOMContentLoaded", function() {
       const ua = navigator.userAgent || navigator.vendor || window.opera;
       const isLine = (ua.indexOf("Line") > -1);
@@ -80,68 +79,57 @@
       // ถ้าเปิดจาก LINE หรือ Facebook ให้โชว์หน้าต่างเตือน
       if (isLine || isFB) {
         inAppWarning.classList.remove('hidden');
-        
-        // ถ้าเป็น Android ให้ลองพยายามเด้งออโต้ 1 รอบ
-        if (/android/i.test(ua) && !isLine) {
-           setTimeout(() => { forceOpenChrome(); }, 500);
-        }
       }
     });
 
-    // 🟢 แก้ไขฟังก์ชันเด้งเปิด Chrome ให้ทะลุการบล็อก 🟢
+    // 🟢 แก้ไขฟังก์ชันเด้งเปิด Chrome ให้เช็คการโดนบล็อก 🟢
     function forceOpenChrome() {
       const ua = navigator.userAgent || navigator.vendor || window.opera;
       const isLine = (ua.indexOf("Line") > -1);
       const rawUrl = window.location.href;
       
-      // กรณี 1: เปิดจากแอป LINE (ทั้ง iOS และ Android)
+      // กรณี 1: เปิดจากแอป LINE (ใช้งานคำสั่งเฉพาะของ LINE ได้ 100%)
       if (isLine) {
         let redirectUrl = rawUrl;
-        if (redirectUrl.indexOf('?') > -1) {
-          redirectUrl += '&openExternalBrowser=1';
-        } else {
-          redirectUrl += '?openExternalBrowser=1';
-        }
+        redirectUrl += (redirectUrl.indexOf('?') > -1) ? '&openExternalBrowser=1' : '?openExternalBrowser=1';
         window.location.href = redirectUrl;
         return;
       }
 
-      // กรณี 2: ไม่ใช่ LINE เตรียม URL สำหรับ Intent
+      // กรณี 2: เปิดจาก Facebook / IG 
       const currentUrl = rawUrl.replace(/^https?:\/\//i, "");
 
-      // Android: ใช้เทคนิคสร้างแท็ก <a> เพื่อจำลองการคลิกทะลุ Facebook
-      if (/android/i.test(ua)) {
-        const intentUrl = "intent://" + currentUrl + "#Intent;scheme=https;package=com.android.chrome;end";
-        const a = document.createElement('a');
-        a.href = intentUrl;
-        document.body.appendChild(a);
-        a.click(); 
-        document.body.removeChild(a); // ลบแท็กทิ้งหลังคลิก
-      } 
-      // iOS: สำหรับเปิดผ่าน Facebook
-      else {
-        const a = document.createElement('a');
-        a.href = "googlechrome://" + currentUrl;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        
-        setTimeout(() => {
-          alert("ถ้ากดแล้วไม่ไป แสดงว่าไม่มีแอป Chrome ในเครื่องน้า \nกดปุ่ม 3 จุดมุมจอ แล้วเลือก 'เปิดใน Safari' ได้เลยจ้า ✨");
-        }, 2000);
+      try {
+        if (/android/i.test(ua)) {
+          // คำสั่งเด้งเปิด Chrome สำหรับ Android
+          window.location.href = "intent://" + currentUrl + "#Intent;scheme=https;package=com.android.chrome;end";
+        } else {
+          // คำสั่งเด้งเปิด Chrome สำหรับ iOS
+          window.location.href = "googlechrome://" + currentUrl;
+        }
+      } catch (e) {
+        console.log("Redirect failed: ", e);
       }
+
+      // 🛑 สำคัญมาก: เช็คว่าโดน Facebook บล็อกหรือไม่ 🛑
+      // ถ้าคำสั่งด้านบนสำเร็จ หน้าเว็บจะปิดตัวเองไป แต่ถ้าโดนบล็อก จะครบ 1.5 วินาทีแล้วแจ้งเตือนนี้เด้งขึ้นมา
+      setTimeout(() => {
+        alert("เฟสบุ๊กบล็อกการเปิดเบราว์เซอร์อัตโนมัติ 🥺\n\nวิธิง่ายๆ:\n1. กดที่ 'จุด 3 จุด' (มุมจอ)\n2. เลือก 👉 'เปิดในเบราว์เซอร์' หรือ 'Open in Browser' แทนนะค้าบ ✨");
+      }, 1500);
     }
 
     function copyToClipboard() {
-      const dummy = document.createElement('input'), text = window.location.href;
+      const dummy = document.createElement('input');
+      const text = window.location.href;
       document.body.appendChild(dummy);
       dummy.value = text;
       dummy.select();
       document.execCommand('copy');
       document.body.removeChild(dummy);
       
-      alert("✅ ก๊อปปี้ลิงก์เรียบร้อยแล้วน้า!\n\nสลับไปเปิดแอป Safari หรือ Chrome แล้ววางลิงก์เพื่อเข้าเล่นได้เลยจ้า ✨");
+      alert("✅ ก๊อปปี้ลิงก์เรียบร้อยแล้วน้า!\n\nสลับไปเปิดแอป Safari หรือ Chrome (หรือแอปเน็ตอื่นๆ) แล้ววางลิงก์เพื่อเข้าเล่นได้เลยจ้า ✨");
     }
   </script>
+  
 </body>
 </html>
