@@ -33,7 +33,7 @@
 </head>
 <body>
 
-  <!-- 🟢 หน้าจอตรวจจับ IN-APP BROWSER (เปลี่ยนสไตล์เป็นน่ารักสดใส) 🟢 -->
+  <!-- 🟢 หน้าจอตรวจจับ IN-APP BROWSER (สไตล์น่ารักสดใส) 🟢 -->
   <div id="inAppWarning" class="hidden absolute inset-0 z-[200] bg-gradient-to-br from-sky-100 via-pink-100 to-purple-100 text-gray-800 flex flex-col items-center justify-center p-6 text-center">
     <div class="animate__animated animate__bounceIn w-full max-w-sm p-6 bg-white rounded-3xl shadow-xl border border-white/50">
       <i class="ph-fill ph-sparkles text-pink-400 text-7xl mb-4"></i>
@@ -77,25 +77,58 @@
       
       const inAppWarning = document.getElementById('inAppWarning');
       
+      // ถ้าเปิดจาก LINE หรือ Facebook ให้โชว์หน้าต่างเตือน
       if (isLine || isFB) {
         inAppWarning.classList.remove('hidden');
-        if (/android/i.test(ua)) {
-          forceOpenChrome();
+        
+        // ถ้าเป็น Android ให้ลองพยายามเด้งออโต้ 1 รอบ
+        if (/android/i.test(ua) && !isLine) {
+           setTimeout(() => { forceOpenChrome(); }, 500);
         }
       }
     });
 
+    // 🟢 แก้ไขฟังก์ชันเด้งเปิด Chrome ให้ทะลุการบล็อก 🟢
     function forceOpenChrome() {
-      const currentUrl = window.location.href.replace(/^https?:\/\//i, "");
       const ua = navigator.userAgent || navigator.vendor || window.opera;
+      const isLine = (ua.indexOf("Line") > -1);
+      const rawUrl = window.location.href;
       
+      // กรณี 1: เปิดจากแอป LINE (ทั้ง iOS และ Android)
+      if (isLine) {
+        let redirectUrl = rawUrl;
+        if (redirectUrl.indexOf('?') > -1) {
+          redirectUrl += '&openExternalBrowser=1';
+        } else {
+          redirectUrl += '?openExternalBrowser=1';
+        }
+        window.location.href = redirectUrl;
+        return;
+      }
+
+      // กรณี 2: ไม่ใช่ LINE เตรียม URL สำหรับ Intent
+      const currentUrl = rawUrl.replace(/^https?:\/\//i, "");
+
+      // Android: ใช้เทคนิคสร้างแท็ก <a> เพื่อจำลองการคลิกทะลุ Facebook
       if (/android/i.test(ua)) {
-        window.location.href = "intent://" + currentUrl + "#Intent;scheme=https;package=com.android.chrome;end";
-      } else {
-        window.location.href = "googlechrome://" + currentUrl;
+        const intentUrl = "intent://" + currentUrl + "#Intent;scheme=https;package=com.android.chrome;end";
+        const a = document.createElement('a');
+        a.href = intentUrl;
+        document.body.appendChild(a);
+        a.click(); 
+        document.body.removeChild(a); // ลบแท็กทิ้งหลังคลิก
+      } 
+      // iOS: สำหรับเปิดผ่าน Facebook
+      else {
+        const a = document.createElement('a');
+        a.href = "googlechrome://" + currentUrl;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        
         setTimeout(() => {
-          alert("ไม่พบแอป Chrome ในเครื่อง กรุณากดปุ่ม 3 จุดมุมขวาบน แล้วเลือก 'เปิดใน Safari' แทนนะครับ");
-        }, 1500);
+          alert("ถ้ากดแล้วไม่ไป แสดงว่าไม่มีแอป Chrome ในเครื่องน้า \nกดปุ่ม 3 จุดมุมจอ แล้วเลือก 'เปิดใน Safari' ได้เลยจ้า ✨");
+        }, 2000);
       }
     }
 
@@ -107,7 +140,7 @@
       document.execCommand('copy');
       document.body.removeChild(dummy);
       
-      alert("✅ คัดลอกลิงก์เรียบร้อยแล้ว!\n\nกรุณาสลับไปเปิดแอป Safari หรือ Chrome แล้ววางลิงก์เพื่อเข้าใช้งานได้เลยครับ");
+      alert("✅ ก๊อปปี้ลิงก์เรียบร้อยแล้วน้า!\n\nสลับไปเปิดแอป Safari หรือ Chrome แล้ววางลิงก์เพื่อเข้าเล่นได้เลยจ้า ✨");
     }
   </script>
 </body>
