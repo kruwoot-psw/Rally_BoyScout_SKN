@@ -33,34 +33,33 @@
 </head>
 <body>
 
-  <!-- 🟢 หน้าจอตรวจจับ IN-APP BROWSER (สไตล์น่ารักสดใส) 🟢 -->
-  <div id="inAppWarning" class="hidden absolute inset-0 z-[200] bg-gradient-to-br from-sky-100 via-pink-100 to-purple-100 text-gray-800 flex flex-col items-center justify-center p-6 text-center">
-    <div class="animate__animated animate__bounceIn w-full max-w-sm p-6 bg-white rounded-3xl shadow-xl border border-white/50">
-      <i class="ph-fill ph-sparkles text-pink-400 text-7xl mb-4"></i>
-      <h2 class="text-2xl font-bold mb-2 text-sky-700">อุ๊ย! GPS แอบอายตรงนี้ ใช้ไม่ได้น้า 🥺</h2>
+  <!-- 🟢 หน้าจอตรวจจับ IN-APP BROWSER (สไตล์น่ารักสดใส วัยรุ่นชอบ) 🟢 -->
+  <div id="inAppWarning" class="hidden absolute inset-0 z-[200] bg-gradient-to-br from-blue-100 via-pink-100 to-purple-100 text-gray-800 flex flex-col items-center justify-center p-6 text-center">
+    <div class="animate__animated animate__bounceIn w-full max-w-sm bg-white/90 backdrop-blur-md p-7 rounded-3xl shadow-2xl border border-white/50">
+      <div class="text-6xl mb-4">🥺</div>
+      <h2 class="text-2xl font-bold mb-2 text-pink-500">อุ๊ย! GPS แอบเขิน ใช้ไม่ได้น้า</h2>
       <p class="text-gray-600 text-sm mb-6 leading-relaxed">
-        เปิดในเบราว์เซอร์ของเครื่อง (Safari/Chrome) ก่อนน้า ถึงจะไปตามล่าแสตมป์ได้! ✨
+        เปิดในแอปนี้ระบบจะไม่ให้เข้าถึงแผนที่น้า<br>รบกวนเปิดในเบราว์เซอร์ของเครื่องเพื่อล่าแสตมป์นะคะ ✨
       </p>
       
       <div class="flex flex-col gap-3 w-full mb-6">
-        <button onclick="forceOpenChrome()" class="w-full bg-sky-500 text-white font-bold py-3.5 rounded-2xl flex items-center justify-center gap-2 hover:bg-sky-600 active:scale-95 transition shadow-lg shadow-sky-500/30">
+        <button onclick="forceOpenChrome()" class="w-full bg-blue-500 text-white font-bold py-3.5 rounded-2xl flex items-center justify-center gap-2 hover:bg-blue-600 active:scale-95 transition shadow-lg shadow-blue-500/30">
           <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 4.14C14.07 4.14 15.93 4.94 17.33 6.26L12.22 15.11C11.39 15.17 10.55 14.86 10 14.28L6.47 8.16C7.88 5.76 9.8 4.14 12 4.14ZM4.14 12C4.14 9.4 5.21 7.07 7.04 5.56L12.3 14.65C12.55 15.08 12.98 15.35 13.5 15.35H7.72C5.55 15.35 4.14 13.78 4.14 12ZM12 19.86C9.52 19.86 7.33 18.57 6 16.5H13.5C14.6 16.5 15.5 15.6 15.5 14.5V11.23L19.26 17.75C17.84 19.06 15.02 19.86 12 19.86Z"/></svg>
-          เปิดใน Google Chrome
+          ลองเปิดใน Google Chrome
         </button>
 
-        <button onclick="copyToClipboard()" class="w-full bg-pink-300 text-white font-bold py-3.5 rounded-2xl flex items-center justify-center gap-2 hover:bg-pink-400 active:scale-95 transition shadow-lg shadow-pink-300/30">
-          <i class="ph-bold ph-copy text-xl"></i> คัดลอกลิงก์ (นำไปวางใน Safari)
+        <button onclick="copyToClipboard()" class="w-full bg-pink-400 text-white font-bold py-3.5 rounded-2xl flex items-center justify-center gap-2 hover:bg-pink-500 active:scale-95 transition shadow-lg shadow-pink-400/30">
+          <i class="ph-bold ph-copy text-xl"></i> คัดลอกลิงก์ไปเปิดเอง
         </button>
       </div>
       
-      <div class="bg-sky-50 p-4 rounded-xl border border-sky-100 text-left">
-        <p class="text-sm font-semibold text-sky-700 mb-1">🍎 แฟนคลับ iPhone / iPad:</p>
-        <p class="text-xs text-gray-700">1. แตะไอคอน <strong class="text-sky-800">จุด 3 จุด (⋯)</strong> มุมจอ</p>
-        <p class="text-xs text-gray-700">2. เลือก <strong class="text-sky-800">"เปิดในเบราว์เซอร์"</strong> หรือ Safari</p>
+      <div class="bg-blue-50 p-4 rounded-xl border border-blue-100 text-left">
+        <p class="text-sm font-semibold text-blue-700 mb-1">🍎 สำหรับ iPhone / iPad:</p>
+        <p class="text-xs text-gray-600">1. แตะที่ไอคอน <strong class="text-blue-800">จุด 3 จุด (⋯)</strong> มุมจอ</p>
+        <p class="text-xs text-gray-600">2. เลือก <strong class="text-blue-800">"เปิดในเบราว์เซอร์"</strong> หรือ Safari ได้เลยจ้า</p>
       </div>
     </div>
   </div>
-
 
   <!-- 🟢 ไอเฟรมหลักของระบบ Rally 🟢 -->
   <iframe 
@@ -68,7 +67,7 @@
     allow="geolocation"
   ></iframe>
 
-<script>
+  <script>
     document.addEventListener("DOMContentLoaded", function() {
       const ua = navigator.userAgent || navigator.vendor || window.opera;
       const isLine = (ua.indexOf("Line") > -1);
@@ -76,45 +75,45 @@
       
       const inAppWarning = document.getElementById('inAppWarning');
       
-      // ถ้าเปิดจาก LINE หรือ Facebook ให้โชว์หน้าต่างเตือน
+      // ตรวจสอบว่าเปิดจากโซเชียลแอปหรือไม่
       if (isLine || isFB) {
+        
+        // ถ้าเป็นแอป LINE: สั่งเปิดบราวเซอร์นอกอัตโนมัติทันที
+        if (isLine && window.location.href.indexOf('openExternalBrowser=1') === -1) {
+          const currentUrl = window.location.href;
+          window.location.href = currentUrl + (currentUrl.indexOf('?') > -1 ? '&' : '?') + 'openExternalBrowser=1';
+          return; // เด้งออกไปเลยไม่ต้องทำต่อ
+        }
+
+        // แสดงหน้าจอแจ้งเตือนสีพาสเทล
         inAppWarning.classList.remove('hidden');
+        
+        // ถ้าเป็น Android ให้พยายามเปิด Chrome ให้อัตโนมัติ 1 รอบ (ถ้า Facebook ไม่บล็อก)
+        if (/android/i.test(ua) && !isLine) {
+           setTimeout(() => { forceOpenChrome(); }, 800);
+        }
       }
     });
 
-    // 🟢 แก้ไขฟังก์ชันเด้งเปิด Chrome ให้เช็คการโดนบล็อก 🟢
     function forceOpenChrome() {
       const ua = navigator.userAgent || navigator.vendor || window.opera;
-      const isLine = (ua.indexOf("Line") > -1);
       const rawUrl = window.location.href;
-      
-      // กรณี 1: เปิดจากแอป LINE (ใช้งานคำสั่งเฉพาะของ LINE ได้ 100%)
-      if (isLine) {
-        let redirectUrl = rawUrl;
-        redirectUrl += (redirectUrl.indexOf('?') > -1) ? '&openExternalBrowser=1' : '?openExternalBrowser=1';
-        window.location.href = redirectUrl;
-        return;
-      }
+      const cleanUrl = rawUrl.replace(/^https?:\/\//i, "");
 
-      // กรณี 2: เปิดจาก Facebook / IG 
-      const currentUrl = rawUrl.replace(/^https?:\/\//i, "");
-
+      // พยายามเด้งไป Chrome (หรือเบราว์เซอร์หลัก)
       try {
         if (/android/i.test(ua)) {
-          // คำสั่งเด้งเปิด Chrome สำหรับ Android
-          window.location.href = "intent://" + currentUrl + "#Intent;scheme=https;package=com.android.chrome;end";
+          window.location.href = "intent://" + cleanUrl + "#Intent;scheme=https;package=com.android.chrome;end";
         } else {
-          // คำสั่งเด้งเปิด Chrome สำหรับ iOS
-          window.location.href = "googlechrome://" + currentUrl;
+          window.location.href = "googlechrome://" + cleanUrl;
         }
       } catch (e) {
-        console.log("Redirect failed: ", e);
+        console.log("Redirect error", e);
       }
 
-      // 🛑 สำคัญมาก: เช็คว่าโดน Facebook บล็อกหรือไม่ 🛑
-      // ถ้าคำสั่งด้านบนสำเร็จ หน้าเว็บจะปิดตัวเองไป แต่ถ้าโดนบล็อก จะครบ 1.5 วินาทีแล้วแจ้งเตือนนี้เด้งขึ้นมา
+      // 🛑 สำคัญ: ถ้าผ่านไป 1.5 วินาทีแล้วหน้าเว็บไม่โดนปิด (แปลว่าเฟสบุ๊กบล็อกปุ่ม) 🛑
       setTimeout(() => {
-        alert("เฟสบุ๊กบล็อกการเปิดเบราว์เซอร์อัตโนมัติ 🥺\n\nวิธิง่ายๆ:\n1. กดที่ 'จุด 3 จุด' (มุมจอ)\n2. เลือก 👉 'เปิดในเบราว์เซอร์' หรือ 'Open in Browser' แทนนะค้าบ ✨");
+        alert("เฟสบุ๊กไม่ยอมให้เปิดแอปอัตโนมัติ 😭\n\nวิธิง่ายๆ:\n1. กดที่ 'จุด 3 จุด' (มุมจอ)\n2. เลือก 👉 'เปิดในเบราว์เซอร์' หรือ 'Open in Browser' แทนนะค้าบ ✨");
       }, 1500);
     }
 
@@ -127,9 +126,8 @@
       document.execCommand('copy');
       document.body.removeChild(dummy);
       
-      alert("✅ ก๊อปปี้ลิงก์เรียบร้อยแล้วน้า!\n\nสลับไปเปิดแอป Safari หรือ Chrome (หรือแอปเน็ตอื่นๆ) แล้ววางลิงก์เพื่อเข้าเล่นได้เลยจ้า ✨");
+      alert("✅ ก๊อปปี้ลิงก์เรียบร้อยแล้วน้า!\n\nสลับไปเปิดแอป Safari หรือ Chrome แล้ววางลิงก์เพื่อเข้าเล่นได้เลยจ้า ✨");
     }
   </script>
-  
 </body>
 </html>
